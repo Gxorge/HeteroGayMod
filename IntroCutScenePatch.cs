@@ -1,31 +1,28 @@
 ﻿using HarmonyLib;
-using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace HeteroGayMod
 {
-    [HarmonyPatch]
+    [HarmonyPatch(typeof(IntroCutscene.CoBegin__d), nameof(IntroCutscene.CoBegin__d.MoveNext))]
     public static class IntroCutScenePatch
     {
-        [HarmonyPatch(typeof(PENEIDJGGAF.CKACLKCOJFO), "MoveNext")]
-        public static void Postfix(PENEIDJGGAF.CKACLKCOJFO __instance)
+        public static void Postfix(IntroCutscene.CoBegin__d __instance)
         {
-            bool isImpostor = FFGALNAPKCD.LocalPlayer.NDGFFHMFGIG.DAPKNDBLKIA;
-            if (isImpostor)
+            if (__instance.isImpostor)
             {
-                __instance.field_Public_PENEIDJGGAF_0.Title.Text = "Gay";
-                __instance.field_Public_PENEIDJGGAF_0.Title.Color = new Color(1f, 0.6f, 0.2f, 1f);
-                __instance.field_Public_PENEIDJGGAF_0.ImpostorText.Text = "Pass the [FF9933FF]Gay [FFFFFF]to the [A075FFFF]Heteros"; // doesnt actually show pepesad
-                __instance.field_Public_PENEIDJGGAF_0.BackgroundBar.material.color = new Color(1f, 0.6f, 0.2f, 1f);
+                __instance.__this.Title.Text = "Gay";
+                __instance.__this.Title.Color = new Color(1f, 0.6f, 0.2f, 1f);
+                __instance.__this.BackgroundBar.material.color = new Color(1f, 0.6f, 0.2f, 1f);
             }
             else
             {
-                __instance.field_Public_PENEIDJGGAF_0.Title.Text = "Hetero";
-                __instance.field_Public_PENEIDJGGAF_0.Title.Color = new Color(0.63f, 0.46f, 1f, 1f);
-                __instance.field_Public_PENEIDJGGAF_0.ImpostorText.Text = "Try avoid catching the [FF9933FF]Gay";
-                __instance.field_Public_PENEIDJGGAF_0.BackgroundBar.material.color = new Color(0.63f, 0.46f, 1f, 1f);
+                __instance.__this.Title.Text = "Hetero";
+                __instance.__this.Title.Color = new Color(0.63f, 0.46f, 1f, 1f);
+                __instance.__this.ImpostorText.Text = "Try avoid catching the [FF9933FF]Gay";
+                __instance.__this.BackgroundBar.material.color = new Color(0.63f, 0.46f, 1f, 1f);
             }
         }
     }

@@ -1,27 +1,33 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using BepInEx.Logging;
 using HarmonyLib;
-using System;
+using Reactor;
+using UnhollowerBaseLib;
+using UnityEngine;
 
 namespace HeteroGayMod
 {
-    [BepInPlugin("moe.gabriella.heterogay", "Hetero-Gay Mod", "1.0.0")]
+    [BepInPlugin(Id)]
+    [BepInProcess("Among Us.exe")]
+    [BepInDependency(ReactorPlugin.Id)]
     public class HeteroGayMod : BasePlugin
     {
-        public static ManualLogSource log;
-        private readonly Harmony harmony;
+        public const string Id = "moe.gabriella.heterogay";
 
-        public HeteroGayMod()
-        {
-            HeteroGayMod.log = base.Log;
-            this.harmony = new Harmony("Hetero-Gay Mod");
-        }
+        public Harmony Harmony { get; } = new Harmony(Id);
+
+        public ConfigEntry<string> Name { get; private set; }
+
+        public static ManualLogSource log;
 
         public override void Load()
         {
-            this.harmony.PatchAll();
-            HeteroGayMod.log.LogMessage("Loaded the Hetero-Gay Mod!");
+            HeteroGayMod.log = base.Log;
+            Harmony.PatchAll();
+
+            HeteroGayMod.log.LogMessage("loaded");
         }
     }
 }
