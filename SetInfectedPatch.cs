@@ -1,9 +1,8 @@
-﻿using HarmonyLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using HarmonyLib;
 using UnhollowerBaseLib;
-using UnityEngine;
 
 namespace HeteroGayMod
 {
@@ -12,27 +11,26 @@ namespace HeteroGayMod
     {
         public static void Postfix(Il2CppStructArray<byte> JPGEIBIBJPJ)
         {
+            HeteroGayMod.impostors.Clear();
+            HeteroGayMod.displayImpostors = false;
             PlayerControl player = PlayerControl.LocalPlayer;
-            bool playerImpostor = false;
             foreach (byte b in JPGEIBIBJPJ)
             {
                 if (player.PlayerId == b)
                 {
-                    playerImpostor = true;
+                    HeteroGayMod.displayImpostors = true;
                     break;
                 }
             }
-
-            if (!playerImpostor)
-                return;
 
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
                 if (JPGEIBIBJPJ.Contains(p.PlayerId))
                 {
-                    p.nameText.Color = new Color(1f, 0.6f, 0.2f, 1f);
+                    HeteroGayMod.impostors.Add(p);
                 }
             }
+            HeteroGayMod.UpdateColours();
         }
 
     }
